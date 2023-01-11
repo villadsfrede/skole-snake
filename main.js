@@ -1,14 +1,11 @@
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 
-var x;
-var y;
-
-ctx.rect()
+var x = 5;
+var y = 5;
+var gridSize = 25
 
 windows.addEventListener("load", () => {
-
-
-
-
+    canvas.width = x*gridSize;
+    canvas.height = y*gridSize;
 });
