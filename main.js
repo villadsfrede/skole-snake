@@ -5,7 +5,7 @@ var x = 5;
 var y = 5;
 var gridSize = 25
 
-windows.addEventListener("load", () => {
+window.addEventListener("load", () => {
     canvas.width = x*gridSize;
     canvas.height = y*gridSize;
 });
