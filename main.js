@@ -19,6 +19,9 @@ var snake = {
     length: 3,
     body : [],
     reset : function() {
+        this.vx = 1
+        this.vy = 0
+        this.length = 3
         this.body = []
         for(let i = 0; i < this.length; i++){
             this.body[i] = [i,0]
@@ -82,5 +85,8 @@ document.addEventListener("keydown", (Event) => {
             snake.vx = 0;
             snake.vy = 1;
         }
+    }
+    if (Event.key == " ") {
+        snake.reset()
     }
 })
