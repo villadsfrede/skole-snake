@@ -14,15 +14,13 @@ window.addEventListener("load", () => {
 });
 
 var snake = {
-    vx : 1,
-    vy : 0,
-    length: 3,
-    body : [],
     reset : function() {
         this.vx = 1
         this.vy = 0
         this.length = 3
         this.body = []
+        this.alive = true
+        this.color = "#00FF00"
         for(let i = 0; i < this.length; i++){
             this.body[i] = [i,0]
         }
@@ -30,18 +28,30 @@ var snake = {
     },
     move : function() {
         for(let i = 0; i < this.body.length; i++) {
-            block(this.body[i][0], this.body[i][1], "#ff0000")
+            block(this.body[i][0], this.body[i][1], this.color)
         }
-
-        this.body.unshift([this.body[0][0] + this.vx, this.body[0][1] + this.vy])
-        this.body.pop()
+        if (this.alive) {
+            this.body.unshift([this.body[0][0] + this.vx, this.body[0][1] + this.vy])
+            this.body.pop()
+        }
+    },
+    collision : function() {
+        let sx = this.body[0][0] + this.vx
+        let sy = this.body[0][1] + this.vy
+        if (sx < 0 || sx > x-1 || sy < 0 || sy > y-1) {
+            this.alive = false;
+            this.color = "#ff0000"
+        }
     }
 }
 
+
+
 function draw(){
     clear()
+    snake.collision()
     snake.move()
-
+    
     setTimeout(draw, 100)
 }
 
