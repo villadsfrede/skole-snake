@@ -10,6 +10,7 @@ window.addEventListener("load", () => {
     canvas.height = y*gridSize;
     
     snake.reset()
+    food.replenish()
     draw()
 });
 
@@ -31,28 +32,60 @@ var snake = {
             block(this.body[i][0], this.body[i][1], this.color)
         }
         if (this.alive) {
+            if (this.body.length == this.length) {
+                this.body.pop()
+            }
             this.body.unshift([this.body[0][0] + this.vx, this.body[0][1] + this.vy])
-            this.body.pop()
         }
     },
     collision : function() {
         let sx = this.body[0][0] + this.vx
         let sy = this.body[0][1] + this.vy
-        if (sx < 0 || sx > x-1 || sy < 0 || sy > y-1) {
+        if (sx < 0 || sx > x-1 || sy < 0 || sy > y-1 || JSON.stringify(this.body).includes(JSON.stringify([sx,sy]))) {
             this.alive = false;
             this.color = "#ff0000"
+        }
+        if(contain(food.food, [sx-this.vx, sy-this.vy])) {
+            this.length += 3;
+        }
+    }
+}
+
+var food = {
+    amount : 10,
+    food : [],
+    replenish : function() {
+        while(this.food.length < this.amount) {
+            newFood = [Math.floor(Math.random() * x), Math.floor(Math.random() * y)]
+            if(!contain(this.food, newFood) && !contain(snake.body, newFood)){
+                this.food.push(newFood)
+            }
+        }
+    },
+    draw : function() {
+        for(let i = 0; i < this.food.length; i++) {
+            block(this.food[i][0], this.food[i][1], "#0000ff")
         }
     }
 }
 
 
-
 function draw(){
     clear()
     snake.collision()
+    food.draw()
     snake.move()
     
     setTimeout(draw, 100)
+}
+
+function contain(main, sub){
+    for(let i = 0; i < main.length; i++){
+        if (JSON.stringify(main[i]) == JSON.stringify(sub)) {
+            return true
+        }
+    }
+    return false
 }
 
 function block(x, y, color) {
