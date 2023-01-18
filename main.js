@@ -6,8 +6,8 @@ var y = 10;
 var gridSize = 40
 
 window.addEventListener("load", () => {
-    //canvas.width = x*gridSize;
-    gridSize = canvas.width/x
+    gridSize = canvas.getBoundingClientRect().width/x
+    canvas.width = x*gridSize;
     canvas.height = y*gridSize;
     
     snake.reset()
