@@ -58,10 +58,10 @@ var snake = {
 }
 
 var food = {
-    amount : 20,
+    amount : 97,
     food : [],
     replenish : function() {
-        while(this.food.length < this.amount) {
+        while(this.food.length < this.amount - Math.max(0, (this.amount+snake.length-1) - (x*y))) {
             newFood = [Math.floor(Math.random() * x), Math.floor(Math.random() * y)]
             if(!contain(this.food, newFood) && !contain(snake.body, newFood)){
                 this.food.push(newFood)
@@ -141,5 +141,6 @@ document.addEventListener("keydown", (Event) => {
     }
     if (Event.key == " ") {
         snake.reset()
+        food.replenish()
     }
 })
