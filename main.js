@@ -3,10 +3,11 @@ var ctx = canvas.getContext("2d");
 
 var x = 10;
 var y = 10;
-var gridSize = 25
+var gridSize = 40
 
 window.addEventListener("load", () => {
-    canvas.width = x*gridSize;
+    //canvas.width = x*gridSize;
+    gridSize = canvas.width/x
     canvas.height = y*gridSize;
     
     snake.reset()
@@ -58,7 +59,7 @@ var snake = {
 }
 
 var food = {
-    amount : 97,
+    amount : 20,
     food : [],
     replenish : function() {
         while(this.food.length < this.amount - Math.max(0, (this.amount+snake.length-1) - (x*y))) {
@@ -100,7 +101,7 @@ function compare(a, b){
 
 function block(x, y, color) {
     ctx.beginPath()
-    ctx.rect(x*gridSize, y*gridSize, gridSize, gridSize)
+    ctx.roundRect(x*gridSize, y*gridSize, gridSize, gridSize, [10, 10, 10, 10])
     ctx.fillStyle = color;
     ctx.fill()
     ctx.closePath()
@@ -141,6 +142,7 @@ document.addEventListener("keydown", (Event) => {
     }
     if (Event.key == " ") {
         snake.reset()
+        food.food = []
         food.replenish()
     }
 })

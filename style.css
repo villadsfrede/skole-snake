@@ -3,14 +3,18 @@ body{
 }
 
 #main{
-    display: flex;
-   
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(3, 30%);
+    gap: 5%;
+}
 
-
+#canvas {
+    display: block;
+    width: 100%;
 }
 
 #settings{
-    width: 100px;
     border: 5px solid cyan;
 }
 #game{
@@ -18,5 +22,4 @@ body{
 }
 #score{
     border: 5px solid cyan;
-    width: 100px;
 }
