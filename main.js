@@ -46,13 +46,19 @@ var snake = {
             this.color = "#ff0000"
         }
         if(contain(food.food, [sx-this.vx, sy-this.vy])) {
-            this.length += 3;
+            this.length += 1;
+            for(let i = 0; i < food.food.length; i++) {
+                if(compare(food.food[i], [sx-this.vx, sy-this.vy])){
+                    food.food.splice(i, 1)
+                }
+            }
+            food.replenish()
         }
     }
 }
 
 var food = {
-    amount : 10,
+    amount : 20,
     food : [],
     replenish : function() {
         while(this.food.length < this.amount) {
@@ -86,6 +92,10 @@ function contain(main, sub){
         }
     }
     return false
+}
+
+function compare(a, b){
+    return a.toString() === b.toString()
 }
 
 function block(x, y, color) {
