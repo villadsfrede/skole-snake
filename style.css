@@ -1,11 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Mono&display=swap');
+
+:root {
+    --light-shade: #F4F7F6;
+    --light-accent: #A1B6EA;
+    --main-color: #D45A49;
+    --dark-accent: #EBB056;
+    --dark-shade: #3A6988;
+}
+
+html {
+    font-family: 'Noto Sans Mono', monospace;
+    font-size: 10px;
+}
+
 body{
-    background-color: black;
+    background-color: var(--dark-shade);
 }
 
 #main{
     display: grid;
     justify-content: center;
-    grid-template-columns: repeat(3, 30%);
+    grid-template-columns: 25% 40% 25%;
     gap: 5%;
 }
 
@@ -15,11 +30,44 @@ body{
 }
 
 #settings{
-    border: 5px solid cyan;
+    background-color: var(--light-shade);
+    border-radius: 0.5rem;
+    padding: 2%;
+
+    display: grid;
+    grid-template-columns: 1fr 0.5fr;
+    gap: 1rem;
+
+    color: var(--dark-shade);
+    font-size: 2rem;
 }
+
+#settings :first-child{
+    grid-column: 1 / -1;
+}
+
 #game{
-    border: 5px solid green;
+    background-color: var(--dark-accent);
+    padding: 2%;
 }
+
 #score{
-    border: 5px solid cyan;
+    background-color: var(--main-color);
+    border-radius: 0.5rem;
+    padding: 2%;
+}
+
+input[type=number]{
+    background-color: inherit;
+    border: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+*:focus {
+    outline: 0;
 }

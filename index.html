@@ -10,10 +10,13 @@
     <div id="main" >
         
         <div id="settings">
-        <input type="button" id="StartGame" value="START GAME" width="100px">
-        <input type="number" name="NumberOfApples" max="10" min="1" id="NumberOfApples">
-        <input type="number" name="SizeX" max="100" min="1" id="SizeX">
-        <input type="number" name="SizeY" max="100" min="1" id="SizeY">
+            <input type="button" id="StartGame" value="START GAME" width="100px">
+            <h2>Amount of apples</h2>
+            <input type="number" name="NumberOfApples" max="10" min="1" id="NumberOfApples" value=1>
+            <h2>Grid X</h2>
+            <input type="number" name="SizeX" max="100" min="1" id="SizeX" value=10>
+            <h2>Grid Y</h2>
+            <input type="number" name="SizeY" max="100" min="1" id="SizeY" value=10>
         </div>
         <div id="game">
             <canvas id="canvas"></canvas>

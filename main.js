@@ -1,8 +1,8 @@
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 
-var x = 10;
-var y = 10;
+var x = 8;
+var y = 8;
 var gridSize = 40
 
 window.addEventListener("load", () => {
@@ -59,7 +59,7 @@ var snake = {
 }
 
 var food = {
-    amount : 20,
+    amount : 5,
     food : [],
     replenish : function() {
         while(this.food.length < this.amount - Math.max(0, (this.amount+snake.length-1) - (x*y))) {
@@ -101,7 +101,7 @@ function compare(a, b){
 
 function block(x, y, color) {
     ctx.beginPath()
-    ctx.roundRect(x*gridSize, y*gridSize, gridSize, gridSize, [10, 10, 10, 10])
+    ctx.roundRect(x*gridSize, y*gridSize, gridSize, gridSize, [20, 20, 20, 20])
     ctx.fillStyle = color;
     ctx.fill()
     ctx.closePath()
