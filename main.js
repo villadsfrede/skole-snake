@@ -1,8 +1,8 @@
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 
-var x = 8;
-var y = 8;
+var x = 10;
+var y = 10;
 var gridSize = 40
 
 window.addEventListener("load", () => {
@@ -22,16 +22,13 @@ var snake = {
         this.length = 3
         this.body = []
         this.alive = true
-        this.color = "#00FF00"
+        this.color = "hsl(180, 75%, 75%)"
         for(let i = 0; i < this.length; i++){
             this.body[i] = [i,0]
         }
         this.body.reverse()
     },
     move : function() {
-        for(let i = 0; i < this.body.length; i++) {
-            block(this.body[i][0], this.body[i][1], this.color)
-        }
         if (this.alive) {
             if (this.body.length == this.length) {
                 this.body.pop()
@@ -55,11 +52,16 @@ var snake = {
             }
             food.replenish()
         }
+    },
+    draw : function() {
+        for(let i = 0; i < this.body.length; i++) {
+            block(this.body[i][0], this.body[i][1], this.color)
+        }
     }
 }
 
 var food = {
-    amount : 5,
+    amount : 10,
     food : [],
     replenish : function() {
         while(this.food.length < this.amount - Math.max(0, (this.amount+snake.length-1) - (x*y))) {
@@ -82,6 +84,7 @@ function draw(){
     snake.collision()
     food.draw()
     snake.move()
+    snake.draw()
     
     setTimeout(draw, 100)
 }
