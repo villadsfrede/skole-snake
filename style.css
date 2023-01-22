@@ -1,11 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Mono&display=swap');
 
 :root {
-    --light-shade: #F4F7F6;
-    --light-accent: #A1B6EA;
-    --main-color: #D45A49;
-    --dark-accent: #EBB056;
-    --dark-shade: #3A6988;
+    --main-color: #43ffaf;
+    --background: #262a33;
+    --sub-color: #526777;
+    --text-color: #e5f7ef;
+    --sub-alt-color: #1f232c;
 }
 
 html {
@@ -14,14 +14,15 @@ html {
 }
 
 body{
-    background-color: var(--dark-shade);
+    background-color: var(--background);
 }
 
 #main{
-    display: grid;
-    justify-content: center;
-    grid-template-columns: 25% 40% 25%;
-    gap: 5%;
+    padding-left: 30%;
+    padding-right: 30%;
+    padding-top: 5%;
+
+    align-items: center;
 }
 
 #canvas {
@@ -29,45 +30,30 @@ body{
     width: 100%;
 }
 
-#settings{
-    background-color: var(--light-shade);
-    border-radius: 0.5rem;
-    padding: 2%;
-
-    display: grid;
-    grid-template-columns: 1fr 0.5fr;
-    gap: 1rem;
-
-    color: var(--dark-shade);
-    font-size: 2rem;
-}
-
-#settings :first-child{
-    grid-column: 1 / -1;
-}
-
 #game{
-    background-color: var(--dark-accent);
-    padding: 2%;
+    background-color: var(--sub-color);
+    padding: 1%;
+    margin: 3%;
 }
 
-#score{
-    background-color: var(--main-color);
-    border-radius: 0.5rem;
-    padding: 2%;
+#control {
+    background-color: var(--sub-alt-color);
+    display: flex;
+    gap: 5%;
+    margin: auto;
+    width: 70%;
+    color: var(--sub-color);
+    font-size: 0.4vw;
+    justify-content: space-evenly;
+    padding: 0.4vw;
+    border-radius: 0.5vw;
 }
 
-input[type=number]{
-    background-color: inherit;
-    border: none;
+#control > h2:hover {
+    cursor: pointer;
+    color: var(--text-color);
 }
 
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-*:focus {
-    outline: 0;
+.control-active {
+    color: var(--main-color);
 }

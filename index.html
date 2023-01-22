@@ -8,24 +8,24 @@
 </head>
 <body>
     <div id="main" >
-        
-        <div id="settings">
-            <input type="button" id="StartGame" value="START GAME" width="100px">
-            <h2>Amount of apples</h2>
-            <input type="number" name="NumberOfApples" max="10" min="1" id="NumberOfApples" value=1>
-            <h2>Grid X</h2>
-            <input type="number" name="SizeX" max="100" min="1" id="SizeX" value=10>
-            <h2>Grid Y</h2>
-            <input type="number" name="SizeY" max="100" min="1" id="SizeY" value=10>
+        <div id="control">
+            <h2 id="gridSmall" class="grid">small</h2>
+            <h2 id="gridMedium" class="grid">medium</h2>
+            <h2 id="gridLarge" class="grid">large</h2>
+            <h2> | </h2>
+            <h2 id="foodSmall" class="food">1</h2>
+            <h2 id="foodMedium" class="food">5</h2>
+            <h2 id="foodLarge" class="food">10</h2>
+            <h2> | </h2>
+            <h2 id="speedSlow" class="speed">slow</h2>
+            <h2 id="speedMedium" class="speed">medium</h2>
+            <h2 id="speedFast" class="speed">fast</h2>
         </div>
         <div id="game">
             <canvas id="canvas"></canvas>
         </div>
-        <div id="score">
-
-
-        </div>
     </div>
-    <script src="main.js"></script>
+    <script type="module" src="main.js"></script>
+    <script type="module" src="config.js"></script>
 </body>
 </html>

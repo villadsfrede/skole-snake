@@ -1,19 +1,22 @@
+import { config } from "./config.js"
+
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
-
-var x = 10;
-var y = 10;
-var gridSize = 40
+var gridSize;
 
 window.addEventListener("load", () => {
-    gridSize = canvas.getBoundingClientRect().width/x
-    canvas.width = x*gridSize;
-    canvas.height = y*gridSize;
+    scale()
     
     snake.reset()
     food.replenish()
     draw()
 });
+
+function scale() {
+    gridSize = canvas.getBoundingClientRect().width/config.x
+    canvas.width = config.x*gridSize;
+    canvas.height = config.y*gridSize;
+}
 
 var snake = {
     reset : function() {
@@ -39,7 +42,7 @@ var snake = {
     collision : function() {
         let sx = this.body[0][0] + this.vx
         let sy = this.body[0][1] + this.vy
-        if (sx < 0 || sx > x-1 || sy < 0 || sy > y-1 || JSON.stringify(this.body).includes(JSON.stringify([sx,sy]))) {
+        if (sx < 0 || sx > config.x-1 || sy < 0 || sy > config.y-1 || JSON.stringify(this.body).includes(JSON.stringify([sx,sy]))) {
             this.alive = false;
             this.color = "#ff0000"
         }
@@ -61,11 +64,10 @@ var snake = {
 }
 
 var food = {
-    amount : 10,
     food : [],
     replenish : function() {
-        while(this.food.length < this.amount - Math.max(0, (this.amount+snake.length-1) - (x*y))) {
-            newFood = [Math.floor(Math.random() * x), Math.floor(Math.random() * y)]
+        while(this.food.length < config.foodAmount - Math.max(0, (config.foodAmount+snake.length-1) - (config.x*config.y))) {
+            var newFood = [Math.floor(Math.random() * config.x), Math.floor(Math.random() * config.y)]
             if(!contain(this.food, newFood) && !contain(snake.body, newFood)){
                 this.food.push(newFood)
             }
@@ -86,7 +88,7 @@ function draw(){
     snake.move()
     snake.draw()
     
-    setTimeout(draw, 100)
+    setTimeout(draw, 500/config.speed)
 }
 
 function contain(main, sub){
@@ -104,7 +106,7 @@ function compare(a, b){
 
 function block(x, y, color) {
     ctx.beginPath()
-    ctx.roundRect(x*gridSize, y*gridSize, gridSize, gridSize, [20, 20, 20, 20])
+    ctx.roundRect(x*gridSize, y*gridSize, gridSize, gridSize) //[20, 20, 20, 20]
     ctx.fillStyle = color;
     ctx.fill()
     ctx.closePath()
@@ -147,5 +149,6 @@ document.addEventListener("keydown", (Event) => {
         snake.reset()
         food.food = []
         food.replenish()
+        scale()
     }
 })
