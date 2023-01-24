@@ -20,7 +20,6 @@ body{
 #main{
     padding-left: 30%;
     padding-right: 30%;
-    padding-top: 5%;
 
     align-items: center;
 }
@@ -56,4 +55,10 @@ body{
 
 .control-active {
     color: var(--main-color);
+}
+
+#top {
+    text-align: center;
+    color: var(--main-color);
+    font-size: 1vw;
 }

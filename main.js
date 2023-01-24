@@ -25,7 +25,7 @@ var snake = {
         this.length = 3
         this.body = []
         this.alive = true
-        this.color = "hsl(180, 75%, 75%)"
+        this.color = [160, 100, 50]
         for(let i = 0; i < this.length; i++){
             this.body[i] = [i,0]
         }
@@ -44,7 +44,7 @@ var snake = {
         let sy = this.body[0][1] + this.vy
         if (sx < 0 || sx > config.x-1 || sy < 0 || sy > config.y-1 || JSON.stringify(this.body).includes(JSON.stringify([sx,sy]))) {
             this.alive = false;
-            this.color = "#ff0000"
+            this.color = [0, 100, 50]
         }
         if(contain(food.food, [sx-this.vx, sy-this.vy])) {
             this.length += 1;
@@ -58,7 +58,11 @@ var snake = {
     },
     draw : function() {
         for(let i = 0; i < this.body.length; i++) {
-            block(this.body[i][0], this.body[i][1], this.color)
+            var color = `hsl(
+                ${this.color[0]},
+                ${this.color[1]}%,
+                ${this.color[2]-i}%`;
+            block(this.body[i][0], this.body[i][1], color)
         }
     }
 }
@@ -75,7 +79,7 @@ var food = {
     },
     draw : function() {
         for(let i = 0; i < this.food.length; i++) {
-            block(this.food[i][0], this.food[i][1], "#0000ff")
+            block(this.food[i][0], this.food[i][1], "#ff0000")
         }
     }
 }
