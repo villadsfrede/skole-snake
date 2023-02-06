@@ -4,9 +4,12 @@ var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 var gridSize;
 
+//Load Sounds
+var deathSound = new Audio('Death.mp3');
+var backgroundMusic = new Audio('Song.mp3');
+
 window.addEventListener("load", () => {
     scale()
-    
     snake.reset()
     food.replenish()
     draw()
@@ -42,9 +45,10 @@ var snake = {
     collision : function() {
         let sx = this.body[0][0] + this.vx
         let sy = this.body[0][1] + this.vy
-        if (sx < 0 || sx > config.x-1 || sy < 0 || sy > config.y-1 || JSON.stringify(this.body).includes(JSON.stringify([sx,sy]))) {
+        if (sx < 0 || sx > config.x-1 || sy < 0 || sy > config.y-1 || contain(this.body, [sx,sy])) {
             this.alive = false;
             this.color = [0, 100, 50]
+            death()
         }
         if(contain(food.food, [sx-this.vx, sy-this.vy])) {
             this.length += 1;
@@ -87,12 +91,14 @@ var food = {
 
 function draw(){
     clear()
-    snake.collision()
     food.draw()
+    snake.collision()
     snake.move()
     snake.draw()
     
-    setTimeout(draw, 500/config.speed)
+    if (snake.alive){
+        setTimeout(draw, 500/config.speed)
+    }
 }
 
 function contain(main, sub){
@@ -122,6 +128,24 @@ function clear(){
     ctx.fillStyle = "white";
     ctx.fill()
     ctx.closePath();
+}
+
+function death() {
+    death.currentTime = 0;
+    deathSound.play()
+
+    //Black sqaure
+    ctx.beginPath()
+    ctx.fillStyle = "#000000"
+    ctx.rect(0, canvas.height/2 - canvas.height/8, canvas.width, canvas.height/4)
+    ctx.fill()
+    
+    //Red text
+    ctx.font = `${gridSize}px serif`;
+    ctx.fillStyle = "#ff0000"
+    ctx.textAlign = "center"
+    ctx.fillText("YOU DIED", canvas.width/2, canvas.height/2 + gridSize/3);
+    ctx.closePath()
 }
 
 document.addEventListener("keydown", (Event) => {
@@ -154,5 +178,6 @@ document.addEventListener("keydown", (Event) => {
         food.food = []
         food.replenish()
         scale()
+        draw()
     }
 })
