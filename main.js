@@ -1,5 +1,6 @@
 import { config } from "./config.js"
 
+//Get canvas element
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 var gridSize;
@@ -8,6 +9,7 @@ var gridSize;
 var deathSound = new Audio('Death.mp3');
 var backgroundMusic = new Audio('Song.mp3');
 
+//Starts functions
 window.addEventListener("load", () => {
     scale()
     snake.reset()
@@ -15,6 +17,7 @@ window.addEventListener("load", () => {
     draw()
 });
 
+//Scales canvas
 function scale() {
     gridSize = canvas.getBoundingClientRect().width/config.x
     canvas.width = config.x*gridSize;
@@ -22,6 +25,7 @@ function scale() {
 }
 
 var snake = {
+    //Start variables for snake
     reset : function() {
         this.vx = 1
         this.vy = 0
@@ -29,9 +33,11 @@ var snake = {
         this.body = []
         this.alive = true
         this.color = [160, 100, 50]
+        //Fills snake body
         for(let i = 0; i < this.length; i++){
             this.body[i] = [i,0]
         }
+        //Reverses so snake move right at start
         this.body.reverse()
     },
     move : function() {
@@ -43,13 +49,15 @@ var snake = {
         }
     },
     collision : function() {
-        let sx = this.body[0][0] + this.vx
-        let sy = this.body[0][1] + this.vy
+        let sx = this.body[0][0] + this.vx //Next x
+        let sy = this.body[0][1] + this.vy //Next y
+        //Collision with wall and self
         if (sx < 0 || sx > config.x-1 || sy < 0 || sy > config.y-1 || contain(this.body, [sx,sy])) {
             this.alive = false;
             this.color = [0, 100, 50]
             death()
         }
+        //Collision with food
         if(contain(food.food, [sx-this.vx, sy-this.vy])) {
             this.length += 1;
             for(let i = 0; i < food.food.length; i++) {
@@ -60,8 +68,10 @@ var snake = {
             food.replenish()
         }
     },
+    //Draws snake
     draw : function() {
         for(let i = 0; i < this.body.length; i++) {
+            //Changes color every sqaure
             var color = `hsl(
                 ${this.color[0]},
                 ${this.color[1]}%,
@@ -71,10 +81,14 @@ var snake = {
     }
 }
 
+//Food variable
 var food = {
-    food : [],
+    food : [], //Holds x,y coordinates for food
+    //Function used to fill up food array
     replenish : function() {
+        //Checks if there is space to generate food
         while(this.food.length < config.foodAmount - Math.max(0, (config.foodAmount+snake.length-1) - (config.x*config.y))) {
+            //Genererates new food
             var newFood = [Math.floor(Math.random() * config.x), Math.floor(Math.random() * config.y)]
             if(!contain(this.food, newFood) && !contain(snake.body, newFood)){
                 this.food.push(newFood)
@@ -88,19 +102,19 @@ var food = {
     }
 }
 
-
+//Main game loop
 function draw(){
-    clear()
-    snake.collision()
-    food.draw()
-    snake.move()
-    snake.draw()
-    
     if (snake.alive){
-        setTimeout(draw, 500/config.speed)
+        clear()
+        snake.collision()
+        food.draw()
+        snake.move()
+        snake.draw()
     }
+    setTimeout(draw, 500/config.speed)
 }
 
+//Checks if array is contained in other array
 function contain(main, sub){
     for(let i = 0; i < main.length; i++){
         if (JSON.stringify(main[i]) == JSON.stringify(sub)) {
@@ -110,10 +124,12 @@ function contain(main, sub){
     return false
 }
 
+//Compares to arrays
 function compare(a, b){
     return a.toString() === b.toString()
 }
 
+//Draws a block on x,y with a specified color
 function block(x, y, color) {
     ctx.beginPath()
     ctx.roundRect(x*gridSize, y*gridSize, gridSize, gridSize) //[20, 20, 20, 20]
@@ -122,6 +138,7 @@ function block(x, y, color) {
     ctx.closePath()
 }
 
+//Clears gameboard
 function clear(){
     ctx.beginPath()
     ctx.rect(0, 0, canvas.width, canvas.height)
@@ -130,6 +147,7 @@ function clear(){
     ctx.closePath();
 }
 
+//Draws death screen and plays sound
 function death() {
     death.currentTime = 0;
     deathSound.play()
@@ -148,6 +166,7 @@ function death() {
     ctx.closePath()
 }
 
+//Eventlistenners for key input
 document.addEventListener("keydown", (Event) => {
     if (Event.key == "ArrowLeft") {
         if (snake.vx != 1) {

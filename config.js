@@ -1,3 +1,5 @@
+//Holds all eventlisteners for UI and start config
+
 var config = {
     x : 10,
     y : 10,
@@ -70,7 +72,3 @@ function removeClass(Class) {
 }
 
 export { config };
-
-var param = {
-    grid : {small : { x : 10, y : 10}}
-}
