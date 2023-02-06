@@ -91,8 +91,8 @@ var food = {
 
 function draw(){
     clear()
-    food.draw()
     snake.collision()
+    food.draw()
     snake.move()
     snake.draw()
     
@@ -178,6 +178,5 @@ document.addEventListener("keydown", (Event) => {
         food.food = []
         food.replenish()
         scale()
-        draw()
     }
 })
